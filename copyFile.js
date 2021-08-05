@@ -8,7 +8,7 @@ console.log("\nFile Contents of example_file:",
 fs.readFileSync("filters.js", "utf8"));
 
 // Copying the file to a the same name
-fs.copyFile("filters.js", ".../app/filters.js", (err) => {
+fs.copyFile("filters.js", "../../../app/filters.js", (err) => {
 if (err) {
 	console.log("Error Found:", err);
 }
@@ -18,7 +18,7 @@ else {
 	// after the function
 	getCurrentFilenames();
 	console.log("\nFile Contents of copied_file:",
-	fs.readFileSync(".../app/filters.js", "utf8"));
+	fs.readFileSync("../../../app/filters.js", "utf8"));
 }
 });
 
