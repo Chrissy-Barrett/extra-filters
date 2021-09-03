@@ -1,10 +1,11 @@
 {
   "name": "@chrissybarrett/extra-filters",
-  "version": "1.0.2",
-  "description": "a package for testing gulp",
+  "version": "1.0.6",
+  "description": "a package for extending the filters on a prototype",
   "main": "index.js",
   "scripts": {
-    "postinstall": "node copyFile.js"
+    "postinstall": "node copyFile.js",
+    "autosetup": "node autoSetup.js"
   },
   "author": "",
   "license": "MIT",

@@ -66,6 +66,11 @@ module.exports = function(env) {
     }
   }
 
+  //filter to turn everything into a potato | toPotato
+  filters.toPotato = function(e) {
+    return e.replace(/\w+/g, 'potato')
+  }
+
 
   //filter for removing white space from a variable "| replaceWS"
   filters.replaceWS = function(e) {

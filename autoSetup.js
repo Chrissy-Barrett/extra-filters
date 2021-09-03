@@ -5,10 +5,10 @@ const fs = require('fs');
 // before the function
 getCurrentFilenames();
 console.log("\nFile Contents of example_file:",
-fs.readFileSync("extra-filters.js", "utf8"));
+fs.readFileSync("utils.js", "utf8"));
 
 // Copying the file to folder using the same name
-fs.copyFile("extra-filters.js", "../../../app/extra-filters.js", (err) => {
+fs.copyFile("utils.js", "../../../lib/utils.js", (err) => {
 if (err) {
 	console.log("Error Found:", err);
 }
@@ -18,7 +18,7 @@ else {
 	// after the function
 	getCurrentFilenames();
 	console.log("\nFile Contents of copied_file:",
-	fs.readFileSync("../../../app/extra-filters.js", "utf8"));
+	fs.readFileSync("../../../lib/utils.js", "utf8"));
 }
 });
 
