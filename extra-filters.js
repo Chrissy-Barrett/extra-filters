@@ -40,21 +40,6 @@ module.exports = function(env) {
 
   ------------------------------------------------------------------ */
 
-  /* ------------------------------------------------------------------
-    keep the following line to return your filters to the app
-  ------------------------------------------------------------------ */
-
-
-//filter to remove duplicates from an array " | unique"
- filters.unique = function(x) {
-   //return x.filter((value, index) => x.indexOf(value) === index );
-   return [...new Set(x)]
- }
-
- //filter remove the first item in an array " |shift"
- filters.shift = function(x) {
-   return x.shift()
- }
 
   //filter for month implment on the page by using "| toMonth"
   filters.toMonth = function(x) {
@@ -66,53 +51,60 @@ module.exports = function(env) {
     }
   }
 
-  //filter to turn everything into a potato | toPotato
-  filters.toPotato = function(e) {
-    return e.replace(/\w+/g, 'potato')
-  }
+  //get today's date change any string in to today's date {{ "foo" | today }}
+  filters.today = function(x) {
+    let date = new Date();
+    let dd = date.getDate();
+    let mm = date.getMonth() + 1;
 
+    const yyyy = date.getFullYear();
+    if (dd < 10) {
+      dd = `0${dd}`;
+    }
+    if (mm < 10) {
+      mm = `0${mm}`;
+    }
+
+    //change the month into a name
+    let monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    mm = monthNames[mm - 1]
+
+    const today = `${dd} ${mm} ${yyyy}`;
+
+    return x.replace(/\w+/g, today)
+  }
 
   //filter for removing white space from a variable "| replaceWS"
   filters.replaceWS = function(e) {
     return e.replace(/\s/g, '')
   }
 
-  //capitalise the first character of a string
+  //capitalise the first character of a string "| firstToUpperCase"
   filters.firstToUpperCase = function(e) {
     return e.charAt(0).toUpperCase() + e.slice(1)
   }
 
   //filter for replacing commas with line breaks "| replaceComma | striptags(true) | escape | nl2br"
-  //This isn't safe for production
   filters.replaceComma = function(e) {
     return e.replace(/\,/g, '\n')
   }
 
-
   //filter for replacing brackets with line breaks "| stripSqBrackets "
-  //This isn't safe for production
   filters.stripSqBrackets = function(e) {
     return e.replace(/\[|\]/g, "")
   }
 
-
   //filter for replacing quotes with line breaks "| stripQuotes "
-  //This isn't safe for production
   filters.stripQuotes = function(e) {
     return e.replace(/\"/g, "")
   }
 
-  //Array to string on new lines | dump | stripQuotes | stripSqBrackets | replaceComma | striptags(true) | escape | nl2br
-
-
   //filter for replacing tildes with line breaks "| replaceTilde | striptags(true) | escape | nl2br"
-  //This isn't safe for production
   filters.replaceTilde = function(e) {
     return e.replace(/\~/g, '\n')
   }
 
   //filter for removing nulls "|removeNull"
-  //This isn't safe for production
   filters.removeNull = function(e) {
     return e.replace(/null/g, '')
   }
@@ -132,19 +124,6 @@ module.exports = function(env) {
   }
 
 
-  //set text for status "| chargeStatusText"
-  filters.chargeStatusText = function(e) {
-    if (e == "CHANGES") {
-      return "CHANGE <br>REQUEST"
-    } else if (e == "INVALID") {
-      return "INVALID"
-    } else if (e == "NOT APPROVED") {
-      return "REVIEW"
-    } else {
-      return "ACTIVE"
-    }
-  }
-
   //set colours for status "| chargeStatusColour"
   filters.chargeStatusColour = function(e) {
     if (e == "NOT APPROVED") {
@@ -155,19 +134,6 @@ module.exports = function(env) {
       return "govuk-tag--blue"
     } else {
       return "govuk-tag--green"
-    }
-  }
-
-  //set text for status "| tagStatusText"
-  filters.tagStatusText = function(e) {
-    if (e == "warning") {
-      return "warning"
-    } else if (e == "reduce") {
-      return "reduce"
-    } else if (e == "stop") {
-      return "stop"
-    } else {
-      return "No&nbsp;restrictions"
     }
   }
 
@@ -184,8 +150,8 @@ module.exports = function(env) {
     }
   }
 
-  //set units "| units"
-  filters.units = function(e) {
+  //set units to symbols"| symbols"
+  filters.symbols = function(e) {
     if (e == "cubicMetresPerSecond") {
       return "m<sup>3</sup>/s"
     } else if (e == "cubicMetresPerDay") {
@@ -203,59 +169,81 @@ module.exports = function(env) {
     }
   }
 
-  //set unitsWords "| unitsWords"
-  filters.unitsWords = function(e) {
-    if (e == "cubicMetresPerSecond") {
-      return "metres cubed per second"
-    } else if (e == "cubicMetresPerDay") {
-      return "metres cubed per day"
-    } else if (e == "litrespersecond") {
-      return "litres per second"
-    } else if (e == "metresAboveOrdinanceDatum") {
-      return "metres above ordnance datum"
-    } else if (e == "metresAboveStationDatum") {
-      return "metres above station datum"
-    } else if (e == "metres") {
+  //set symbols to units "| units"
+  filters.units = function(e) {
+    if (e == "m") {
       return "metres"
+    } else if (e == "kg") {
+      return "kilograms"
+    } else if (e == "m/s") {
+      return "metre per second"
+    } else if (e == "s") {
+      return "second"
     } else {
-      return "megalitres per day"
+      return ""
     }
   }
 
 
-
-  //show only results for a certain customer "| customer"
-  filters.customer = function(e) {
-    if (e == "Bottled Water Plc")
-      $(this).hide();
+  //set currency abbreviations to symbols "| currencySymbols"
+  filters.currencySymbols = function(e) {
+    if (e == "GBP") {
+      return "£"
+    } else if (e == "JPY") {
+      return "¥"
+    } else if (e == "EUR") {
+      return "€"
+    } else if (e == "USD") {
+      return "$"
+    } else {
+      return ""
+    }
   }
 
+
   //push items in to an array to be used in a nunjucks macro "| push"
-  /* e.g {% set selectItems = [] %}
-{% for item in selectData %}
-  {% set selectItems = selectItems | push({
-    value: item.value,
-    text: item.text
-  }) %}
-{% endfor %}
-{{ govukSelect({
-  id: "sort",
-  name: "sort",
-  label: {
-    text: "Sort by"
-  },
-  items: items
-}) }}*/
+  /* e.g
+          {% set selectItems = [] %}
+          {% for item in selectData %}
+              {% set selectItems = selectItems | push({
+                  value: item.value,
+                  text: item.text
+              }) %}
+          {% endfor %}
+          {{ govukSelect({
+            id: "sort",
+            name: "sort",
+            label: {
+              text: "Sort by"
+              },
+            items: items
+          }) }}
+          */
   filters.push = (array, item) => {
     array.push(item)
     return array
   }
 
+  //filter to remove duplicates from an array " | unique"
+  filters.unique = function(x) {
+    //return x.filter((value, index) => x.indexOf(value) === index );
+    return [...new Set(x)]
+  }
+
+  //filter remove the first item in an array " |shift"
+  filters.shift = function(x) {
+    return x.shift()
+  }
 
 
-  //filters.statusReview = function(e) { return e.chargeStatus === "CHARGEABLE";}
+  //Array to string on new lines, this uses in built filters and other filters in this file  "| dump | stripQuotes | stripSqBrackets | replaceComma | striptags(true) | escape | nl2br "
 
-  //filters.statusReview = function(arr) { arr.filter(i => i.chargeStatus == 'CHARGEABLE')};
+
+
+
+  /* ------------------------------------------------------------------
+    keep the following line to return your filters to the app
+  ------------------------------------------------------------------ */
 
   return filters
 }
