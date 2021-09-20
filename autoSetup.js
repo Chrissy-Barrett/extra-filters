@@ -1,32 +1,19 @@
 // Import the filesystem module
 const fs = require('fs');
 
-// Get the current filenames
-// before the function
-getCurrentFilenames();
-console.log("\nFile Contents of example_file:",
-fs.readFileSync("utils.js", "utf8"));
+fs.readFile("../../../lib/utils.js", 'utf8', function(err, data) {
+  let re = new RegExp(/(var filters \= Object.assign\(coreFilters, customFilters\))/, 'gm');
+  let formatted = data.replace(re, "var extraFilters = require('../app/extra-filters.js')(env)/nvar filters = Object.assign(coreFilters, customFilters, extraFilters)");
 
-// Copying the file to folder using the same name
-fs.copyFile("utils.js", "../../../lib/utils.js", (err) => {
-if (err) {
-	console.log("Error Found:", err);
-}
-else {
+  fs.writeFile("../../../lib/utils.js", formatted, 'utf8', function(err) {
+    if (err) { return console.log(err);
+  } else {
 
-	// Get the current filenames
-	// after the function
-	getCurrentFilenames();
-	console.log("\nFile Contents of copied_file:",
-	fs.readFileSync("../../../lib/utils.js", "utf8"));
-}
+		// Get the current filenames
+		// after the function
+		console.log("\nFile Contents of copied_file:",
+		fs.readFileSync("../../../lib/utils.js", "utf8"));
+		console.log("\nauto setup success");
+	 }
+  });
 });
-
-// Function to get current filenames
-// in directory
-function getCurrentFilenames() {
-console.log("\nCurrent filenames:");
-fs.readdirSync(__dirname).forEach(file => {
-	console.log(file);
-});
-}

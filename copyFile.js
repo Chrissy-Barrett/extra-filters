@@ -28,5 +28,6 @@ function getCurrentFilenames() {
 console.log("\nCurrent filenames:");
 fs.readdirSync(__dirname).forEach(file => {
 	console.log(file);
+		console.log("successfully coppied extra-filters.js");
 });
 }
