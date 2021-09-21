@@ -110,43 +110,28 @@ module.exports = function(env) {
   }
 
 
-  //set colours for status "| statusColour"
-  filters.statusColour = function(e) {
-    if (e === "building") {
-      return "govuk-tag--orange"
-    } else if (e === "error") {
-      return "govuk-tag--red"
-    } else if (e === "sent") {
-      return "govuk-tag--blue"
-    } else {
+  //set colours for status "| tagColour"
+  filters.tagColour = function(e) {
+    if (e == "Inactive") {
+      return "govuk-tag--grey"
+    } else if (e == "New") {
       return "govuk-tag--green"
-    }
-  }
-
-
-  //set colours for status "| chargeStatusColour"
-  filters.chargeStatusColour = function(e) {
-    if (e == "NOT APPROVED") {
-      return "govuk-tag--orange"
-    } else if (e == "INVALID") {
-      return "govuk-tag--red"
-    } else if (e == "CHANGES") {
+    } else if (e == "Active") {
+      return "govuk-tag--turquoise"
+    } else if (e == "Pending") {
       return "govuk-tag--blue"
-    } else {
-      return "govuk-tag--green"
-    }
-  }
-
-  //set colours for status "| tagStatusColour"
-  filters.tagStatusColour = function(e) {
-    if (e == "warning") {
+    } else if (e == "Received") {
+      return "govuk-tag--purple"
+    } else if (e == "Sent") {
+      return "govuk-tag--pink"
+    } else if (e == "Rejected") {
+      return "govuk-tag--red"
+    } else if (e == "Declined") {
+      return "govuk-tag--orange"
+    } else if (e == "Delayed") {
       return "govuk-tag--yellow"
-    } else if (e == "reduce") {
-      return "govuk-tag--orange"
-    } else if (e == "stop") {
-      return "govuk-tag--red"
     } else {
-      return "govuk-tag--green"
+      return ""
     }
   }
 
@@ -199,6 +184,12 @@ module.exports = function(env) {
       return ""
     }
   }
+
+
+  //filter to turn a string in to a comma separated string prepended by the £ symbol "| toGBPString"
+    filters.toGBP = function(x) {
+      return x.replace(/\B(?=(\d{3})+(?!\d))/g, ',').replace (/^/,'£');
+    }
 
 
   //push items in to an array to be used in a nunjucks macro "| push"
