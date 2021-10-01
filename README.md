@@ -1,6 +1,6 @@
 # extra-filters
 
-## About the Prototype Kit
+## About the module
 
 This is a module that extends the filter functionality of the gov-uk prototype kit, by adding and extra-filters file.
 
