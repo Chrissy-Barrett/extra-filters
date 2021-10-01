@@ -8,7 +8,7 @@ The extra filters file contains a list of custom filters that help to solve comm
 
 ## Installation instructions
 
-  $ npm install @chrissybarrett/extra-filters
+`npm install @chrissybarrett/extra-filters`
 
 This will copy the "extra-filters.js" file to your protoype.
 
@@ -21,7 +21,7 @@ Or you can run the autosetup script. To run the autosetup script.
 
 cd /{Your Prorotype directory}/node_modules/@chrissybarrett/extra-filters
 
-  $ npm run autosetup
+  `npm run autosetup`
         
 ## Contributing
 
