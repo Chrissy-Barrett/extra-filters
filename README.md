@@ -2,24 +2,36 @@
 
 ## About the module
 
-This is a module that extends the filter functionality of the gov-uk prototype kit, by adding and extra-filters file.
+This is a module that extends the filter functionality of the gov-uk prototype kit, by adding an extra-filters file.
 
-The extra filters file contains a list of custom filters that help to solve common prototyping challenges.
+The extra-filters file contains a list of custom filters that help to solve common prototyping challenges.
 
 ## Installation instructions
 
 `npm install @chrissybarrett/extra-filters`
 
-This will copy the "extra-filters.js" file to your protoype.
+This will copy the _extra-filters.js_ file to your prototype.
 
-Next you will either need to modify your utils.js file to reference the new file by changing line 19 and 20 to:
+The next step is to include the file into the application. You can either modify your _utils.js_ file
+(`app/views/lib/util.js`) to reference the new file or run the _autoSetup.js_ script to do this automatically. 
 
-  var extraFilters = require('../app/extra-filters.js')(env)
-	var filters = Object.assign(coreFilters, extraFilters, customFilters)
+Modify the _utils.js_ file by inserting the new filters into the existing _addNunjucksFilters_ function, eg:
+
+```JavaScript
+exports.addNunjucksFilters = function (env) {
+  var coreFilters = require('./core_filters.js')(env)
+  var customFilters = require('../app/filters.js')(env)
+  var extraFilters = require('../app/extra-filters.js')(env) 
+  var filters = Object.assign(coreFilters, customFilters, extraFilters)
+  Object.keys(filters).forEach(function (filterName) {
+    env.addFilter(filterName, filters[filterName])
+  })
+}
+```
 
 Or you can run the autosetup script. To run the autosetup script.
 
-cd /{Your Prorotype directory}/node_modules/@chrissybarrett/extra-filters
+`cd /{Your prototype directory}/node_modules/@chrissybarrett/extra-filters`
 
   `npm run autosetup`
         
